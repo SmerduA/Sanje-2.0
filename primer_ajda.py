@@ -26,17 +26,30 @@ def drzave_spisek():
 def plezalisce_spisek():
     """Glavna stran za urejanje postaj."""
     # Tu bi morali dobiti postaje iz baze
-    cur.execute("SELECT plezalisce FROM plezalisca ORDER BY plezalisce")
+    cur.execute("SELECT nekoime.plezalisce, drzava, stevilo FROM nekoime JOIN plezalisca ON nekoime.plezalisce=plezalisca.plezalisce ORDER BY drzava, plezalisce")
     
     return template('plezalisca', plezalisca=cur)
 
-@route('/smeri/')
-def smeri_spisek():
-    """Glavna stran za urejanje postaj."""
-    # Tu bi morali dobiti postaje iz baze
-    cur.execute("SELECT smer FROM smeri")
-    
-    return template('smeri', smeri=cur)
+##@route('/<plezalisceid>/')
+##def plezalisce_smeri(plezalisceid):
+##    cur.execute("SELECT ime, dolzina, tezavnost FROM smeri WHERE plezalisce="+str(plezalisceid))
+##   
+##    return template('plezalisce_smeri',
+##                    smeri=cur)
+
+@route('/plezalisca/vrsic/')
+def plezalisce_smeri():
+    cur.execute("SELECT ime, dolzina, tezavnost FROM smeri WHERE plezalisce='Vršič'")
+   
+    return template('plezalisce_smeri',
+                    smeri=cur)
+##@route('/smeri/')
+##def smeri_spisek():
+##    """Glavna stran za urejanje postaj."""
+##    # Tu bi morali dobiti postaje iz baze
+##    cur.execute("SELECT smer FROM smeri")
+##    
+##    return template('smeri', smeri=cur)
 
 #@get('/transakcije/:x/')
 #def transakcije(x):
