@@ -13,11 +13,30 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 
 # odkomentiraj, če želiš sporočila o napakah
 # debug(True)
-
 @get('/')
 def index():
-    cur.execute("SELECT * FROM drzave")
+    return template('zacetna')
+
+@route('/drzave/')
+def drzave_spisek():
+    cur.execute("SELECT drzava FROM drzave ORDER BY drzava")
     return template('drzave.html', drzave=cur)
+
+@route('/plezalisca/')
+def plezalisce_spisek():
+    """Glavna stran za urejanje postaj."""
+    # Tu bi morali dobiti postaje iz baze
+    cur.execute("SELECT plezalisce FROM plezalisca ORDER BY plezalisce")
+    
+    return template('plezalisca', plezalisca=cur)
+
+@route('/smeri/')
+def smeri_spisek():
+    """Glavna stran za urejanje postaj."""
+    # Tu bi morali dobiti postaje iz baze
+    cur.execute("SELECT smer FROM smeri")
+    
+    return template('smeri', smeri=cur)
 
 #@get('/transakcije/:x/')
 #def transakcije(x):
