@@ -1,0 +1,51 @@
+﻿<html>
+<head>
+  
+<title>{{dr}}</title>
+</head>
+<body>
+  
+<h2>{{dr}}</h2>
+
+  
+<table cellpadding="0" cellspacing="0" border="1">
+  
+<tr>
+     
+
+<th> Ime plezališča</th>
+ <th> Število smeri</th>   
+ 
+</tr>
+  %for plezalisce, stevilo in drzava:
+    <tr>
+       
+       
+<td><a href="/plezalisca/{{plezalisce}}/">{{plezalisce}}</a></td>
+ <td>{{stevilo}} </td>   
+    
+</tr>
+  %end
+  
+
+
+
+</table>
+
+  
+<a href="/drzave/">Države</a>
+
+ <br>
+
+<a href="/plezalisca/">Plezališča</a>
+
+
+
+<br>
+
+<a href="/">Nazaj domov</a>
+
+
+</body>
+
+</html>

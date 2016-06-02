@@ -19,30 +19,36 @@ def index():
 
 @route('/drzave/')
 def drzave_spisek():
-    cur.execute("SELECT drzava FROM drzave ORDER BY drzava")
+    cur.execute("SELECT drzava, count(*) FROM plezalisca GROUP BY drzava ORDER BY drzava")
     return template('drzave.html', drzave=cur)
 
 @route('/plezalisca/')
 def plezalisce_spisek():
-    """Glavna stran za urejanje postaj."""
-    # Tu bi morali dobiti postaje iz baze
+    
     cur.execute("SELECT nekoime.plezalisce, drzava, stevilo FROM nekoime JOIN plezalisca ON nekoime.plezalisce=plezalisca.plezalisce ORDER BY drzava, plezalisce")
     
     return template('plezalisca', plezalisca=cur)
 
-##@route('/<plezalisceid>/')
+##@route('/plezalisca/<plezalisceid>/')
 ##def plezalisce_smeri(plezalisceid):
 ##    cur.execute("SELECT ime, dolzina, tezavnost FROM smeri WHERE plezalisce="+str(plezalisceid))
 ##   
 ##    return template('plezalisce_smeri',
 ##                    smeri=cur)
 
-@route('/plezalisca/vrsic/')
-def plezalisce_smeri():
-    cur.execute("SELECT ime, dolzina, tezavnost FROM smeri WHERE plezalisce='Vršič'")
+@route('/plezalisca/:x/')
+def plezalisce_smeri(x):
+    cur.execute("SELECT ime, dolzina, tezavnost FROM smeri WHERE plezalisce=%s ORDER BY ime", [x])
    
     return template('plezalisce_smeri',
-                    smeri=cur)
+                    smeri=cur, ime=x)
+
+@route('/drzave/:y/')
+def drzava_plezalisca(y):
+    cur.execute("SELECT nekoime.plezalisce, nekoime.stevilo FROM nekoime JOIN plezalisca ON nekoime.plezalisce=plezalisca.plezalisce WHERE plezalisca.drzava=%s ORDER BY plezalisce", [y])
+   
+    return template('drzava_plezalisca',
+                    drzava=cur, dr=y)
 ##@route('/smeri/')
 ##def smeri_spisek():
 ##    """Glavna stran za urejanje postaj."""

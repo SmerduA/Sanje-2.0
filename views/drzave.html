@@ -14,15 +14,15 @@
      
 
 <th> Država</th>
-     
+     <th> Število plezališč</th>
  
 </tr>
-  %for drzava in drzave:
+  %for drzava, st in drzave:
     <tr>
        
        
-<td>{{drzava}}</td>
-       
+<td><a href="/drzave/{{drzava}}/">{{drzava}}</a></td>
+       <td>{{st}}</td>
     
 </tr>
   %end
@@ -35,6 +35,11 @@
 
 
 <a href="/plezalisca/">Plezališča</a>
+<br>
+
+<a href="/">Nazaj domov</a>
+
+
 
 
 </body>

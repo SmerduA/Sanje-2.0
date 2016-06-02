@@ -14,15 +14,15 @@
      
 
 <th> Plezalisce</th>
-     <th> država</th>    <th> št. smeri</th>
+     <th> Država</th>    <th> Število smeri</th>
  
 </tr>
   %for plezalisce, drzava, stevilo in plezalisca:
     <tr>
        
        
-<td>{{plezalisce}}</td>
-       <td>{{drzava}} </td>     <td>{{stevilo}} </td>
+<td> <a href="/plezalisca/{{plezalisce}}/">{{plezalisce}}</a></td>
+       <td><a href="http://localhost:8080/drzave/{{drzava}}/">{{drzava}} </a></td>     <td>{{stevilo}} </td>
     
 </tr>
   %end
@@ -34,7 +34,11 @@
 
 
 <a href="/drzave/">Države</a>
-<a href="/plezalisca/">Plezališča</a>
+<br>
+
+<a href="/">Nazaj domov</a>
+
+
 
 
 
