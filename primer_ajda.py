@@ -17,6 +17,10 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # se znebimo prob
 def index():
     return template('zacetna')
 
+@get('/static/:x')
+def static(x):
+    return static_file(x, 'static')
+
 @route('/drzave/')
 def drzave_spisek():
     cur.execute("SELECT drzava, count(*) FROM plezalisca GROUP BY drzava ORDER BY drzava")
