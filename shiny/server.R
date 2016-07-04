@@ -12,8 +12,7 @@ shinyServer(function(input, output) {
                        user = user, password = password)
   tbl.plezalisca <- tbl(conn, "plezalisca")
   output$plezalisca <- renderTable({
-    # Naredimo poizvedbo
-    # x %>% f(y, ...) je ekvivalentno f(x, y, ...)
+    
     t <- tbl.plezalisca
     t
   })
