@@ -61,20 +61,19 @@ tabPanel( "države glede na število plezališč",
 tabPanel( "Poišči plezališče po meri",
           sidebarLayout(
             sidebarPanel(
-              selectInput("ppdrzava", label="Izberi državo:",
+              selectInput("ppdrzava", label="Izberi drĹľavo:",
                           choices = list("vse države", "Avstrija","Bosna in Hercegovina","Češka","Črna gora","Grčija","Hrvaška", "Juzna Afrika", "Maroko", "Nemčija", "Poljska", "Slovaška", "Slovenija","Španija", "Srbija", "Švedska", "Švica", "Tajska", "Turčija" ,"Združene države Amerike"),
                           selected = "vse države"),
-              # #selectInput()
-              #
+
 
               numericInput("mindolzina",
-                          label="Izberi minimalno dolžino smeri",
+                          label="Izberi minimalno dolžino smeri (m)",
                           value = 0,
                           min= 0,
                           max = 680
               ),
               numericInput("maxdolzina",
-                           label="Izberi maksimalno dolžino smeri",
+                           label="Izberi maksimalno dolžino smeri (m)",
                            value = 680,
                            min= 0,
                            max = 680
@@ -91,20 +90,41 @@ tabPanel( "Poišči plezališče po meri",
                            min= 1,
                            max = 9
               )
-            #   sliderInput("ppdolžina",
-            #               label="Izberi dolžino smeri",
+            #   sliderInput("ppdolĹľina",
+            #               label="Izberi dolĹľino smeri",
             #               min= 0,
             #               max = 680,
             #               value=c(0, 680)
             #   ),
             # sliderInput("ppsmeri",
-            #             label = "Izberi število smeri z določeno dolžino in težavnostjo",
+            #             label = "Izberi Ĺˇtevilo smeri z doloÄŤeno dolĹľino in teĹľavnostjo",
             #             min= 1,
             #             max =706,
             #             value=c(1, 706)
            ),
              mainPanel( tableOutput("ppplezalisca")
                
-             )))
+             ))),
+###################################
+tabPanel( "Nekaj grafov",
+          sidebarLayout(
+            sidebarPanel(
+              selectInput("ddrzava",
+                          label = "Izberi državo:",
+                          choices = list("vse države", "Avstrija","Bosna in Hercegovina","Češka","Črna gora","Grčija","Hrvaška", "Juzna Afrika", "Maroko", "Nemčija", "Poljska", "Slovaška", "Slovenija","Španija", "Srbija", "Švedska", "Švica", "Tajska", "Turčija" ,"Združene države Amerike"),
+                          selected="vse države"
+              ),
+              selectInput("ddoltez",
+                          label = "Izberi, kaj te zanima:",
+                          choices = list("dolžina smeri", "težavnost smeri"),
+                          selected="dolžina smeri"
+              )
+                          
+              
+            ),
+            
+            mainPanel(
+              plotOutput("grafi")
+            )))
 
   )))

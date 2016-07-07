@@ -25,19 +25,22 @@ shinyServer(function(input, output) {
     }
     t <- t %>% filter(input$stevilo_smeri[1] <= stevilo,
                       stevilo <= input$stevilo_smeri[2]) %>% data.frame()
+    Encoding(t$drzava) <- "UTF-8"
+    Encoding(t$plezalisce) <- "UTF-8"
     t
   })
   
   ##################
   output$drzavestevilo <- renderTable({drz <- tbl.drzavestevilo %>% filter(input$st_plezalisc[1] <= stevilo_plezalisc & stevilo_plezalisc<= input$st_plezalisc[2]) %>% data.frame()
-                            drz})
+        Encoding(drz$drzava) <-"UTF-8"                    
+        drz})
   
   #######################
   
   output$drzavetorta <- renderPlot({ps <- tbl.drzavestevilo %>% data.frame()
-  if(input$nacinprikaza == "histogram") hist(ps$stevilo_plezalisc, main= "Države po številu plezališč", xlab="število plezališč", ylab="število držav", breaks = 20)
+  if(input$nacinprikaza == "histogram") hist(ps$stevilo_plezalisc, main= "Drzave po številu plezališč", xlab="število plezališč", ylab="število držav", breaks = 20)
   else
-  pie(ps$stevilo_plezalisc, main="Države po številu plezališč")
+  pie(ps$stevilo_plezalisc, main="Drzave po številu plezališč")
     
     
   })
@@ -56,11 +59,34 @@ shinyServer(function(input, output) {
     }
     
     pomeri <- pomeri %>% data.frame
+    Encoding(pomeri$plezalisce) <-"UTF-8"
+    Encoding(pomeri$drzava) <- "UTF-8"
     pomeri
     
   })
   
+  ######################################
   
+  output$grafi <- renderPlot({
+    tbl.smeridrzave <- tbl(conn, sql("SELECT ime, dolzina, tezavnost, plezalisca.drzava FROM smeri NATURAL JOIN plezalisca"))
+    if(input$ddrzava != "vse države"){
+      tbl.smeridrzave <-tbl.smeridrzave %>% filter(drzava == input$ddrzava)
+    }
+    smeridrzave <- tbl.smeridrzave %>% data.frame()
+    
+#    h1 <- hist(smeridrzave$dolzina, main="Histogram dolžin",breaks = 100)
+#    h2 <- hist(smeridrzave$dolzina,main="Histogram težavnosti", breaks = 100)
+    if(input$ddoltez == "dolžina smeri") {
+      h <-hist(smeridrzave$dolzina, main="Histogram dolžin",breaks = 100)
+    }
+    
+    if(input$ddoltez == "težavnost smeri") {
+    h <-hist(smeridrzave$dolzina,main="Histogram težavnosti", breaks = 100)
+      }
+    
+    
+    h  
+  })
   
   
   
