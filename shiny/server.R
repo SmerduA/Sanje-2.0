@@ -18,9 +18,13 @@ shinyServer(function(input, output) {
   
   ############################
   
-  output$plezaliscaPoDrzavah <- renderTable({
-    
-    t <- tbl.plezaliscastevilo %>% if(input$izberi_drzavo=="vse države") filter(input$stevilo_smeri[1]<= stevilo & stevilo <= input$stevilo_smeri[2]) else filter(drzava==input$izberi_drzavo & input$stevilo_smeri[1]<= stevilo & stevilo <= input$stevilo_smeri[2]) %>% data.frame()
+  output$plezaliscaPoDrzavah <- renderTable({    
+    t <- tbl.plezaliscastevilo
+    if(input$izberi_drzavo != "vse države") {
+      t <- t %>% filter(drzava==input$izberi_drzavo)
+    }
+    t <- t %>% filter(input$stevilo_smeri[1] <= stevilo,
+                      stevilo <= input$stevilo_smeri[2]) %>% data.frame()
     t
   })
   
@@ -30,9 +34,29 @@ shinyServer(function(input, output) {
   
   #######################
   
-  output$plezaliscastevilo <- renderTable({ps <- tbl.plezaliscastevilo %>% data.frame()
-  ps
+  output$drzavetorta <- renderPlot({ps <- tbl.drzavestevilo %>% data.frame()
+  if(input$nacinprikaza == "histogram") hist(ps$stevilo_plezalisc, main= "Države po številu plezališč", xlab="število plezališč", ylab="število držav", breaks = 20)
+  else
+  pie(ps$stevilo_plezalisc, main="Države po številu plezališč")
     
+    
+  })
+  
+  ######################
+  
+  output$ppplezalisca <- renderTable({
+    
+    stavek <- paste("SELECT plezalisca.plezalisce, plezalisca.drzava, count(*) AS stevilo_smeri FROM smeri JOIN plezalisca ON smeri.plezalisce = plezalisca.plezalisce 
+                    WHERE tezavnost <= text(", toString(input$maxtezavnost),") AND tezavnost>= text(", toString(input$mintezavnost), ") AND dolzina <= ", toString(input$maxdolzina), "AND dolzina >=", toString(input$mindolzina),
+                    "GROUP BY plezalisca.plezalisce ORDER BY stevilo_smeri DESC", sep=" ")
+    tbl.pomeri <- tbl(conn, sql(stavek))
+    pomeri <- tbl.pomeri
+    if(input$ppdrzava != "vse države") {
+      pomeri <- pomeri %>% filter(drzava == input$ppdrzava)
+    }
+    
+    pomeri <- pomeri %>% data.frame
+    pomeri
     
   })
   
