@@ -43,7 +43,7 @@ tabPanel( "Države",
             ))),
 
 ##############################
-tabPanel( "države glede na število plezališč",
+tabPanel( "Države glede na število plezališč",
           sidebarLayout(
             sidebarPanel(
               selectInput("nacinprikaza",
@@ -61,7 +61,7 @@ tabPanel( "države glede na število plezališč",
 tabPanel( "Poišči plezališče po meri",
           sidebarLayout(
             sidebarPanel(
-              selectInput("ppdrzava", label="Izberi drĹľavo:",
+              selectInput("ppdrzava", label="Izberi državo:",
                           choices = list("vse države", "Avstrija","Bosna in Hercegovina","Češka","Črna gora","Grčija","Hrvaška", "Juzna Afrika", "Maroko", "Nemčija", "Poljska", "Slovaška", "Slovenija","Španija", "Srbija", "Švedska", "Švica", "Tajska", "Turčija" ,"Združene države Amerike"),
                           selected = "vse države"),
 
